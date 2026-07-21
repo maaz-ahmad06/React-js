@@ -26,7 +26,28 @@ const App = () => {
       mouse.current.y = e.clientY
     }
 
+    const handleMouseOver = (e) => {
+      const target = e.target
+      if (
+        target && (
+          target.tagName === 'A' ||
+          target.tagName === 'BUTTON' ||
+          target.closest('a') ||
+          target.closest('button') ||
+          target.closest('input') ||
+          target.closest('textarea') ||
+          target.classList.contains('cursor-pointer') ||
+          (target.closest('.cursor-pointer'))
+        )
+      ) {
+        outlineRef.current?.classList.add('scale-150', 'bg-primary/10')
+      } else {
+        outlineRef.current?.classList.remove('scale-150', 'bg-primary/10')
+      }
+    }
+
     document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseover', handleMouseOver)
 
     const animate = () => {
       position.current.x += (mouse.current.x - position.current.x) * 0.1
@@ -41,6 +62,7 @@ const App = () => {
     animate()
     return ()=>{
       document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseover', handleMouseOver)
     }
 
   },[])
@@ -57,10 +79,10 @@ const App = () => {
       <Footer theme={theme}/>
 
       {/* Custom Cursor Ring */}
-      <div ref={outlineRef} className='fixed top-0 left-0 h-10 w-10 rounded-full border border-primary pointer-events-none z-[9999]' style={{transition: 'transform 0.1s ease-out'}}></div>
+      <div ref={outlineRef} className='fixed top-0 left-0 h-10 w-10 rounded-full border border-primary pointer-events-none z-[9999] custom-cursor custom-cursor-ring'></div>
 
       {/* Custom Cursor Dot */}
-      <div ref={dotRef} className='fixed top-0 left-0 h-3 w-3 rounded-full bg-primary pointer-events-none z-[9999]'></div>
+      <div ref={dotRef} className='fixed top-0 left-0 h-3 w-3 rounded-full bg-primary pointer-events-none z-[9999] custom-cursor'></div>
     </div>
   )
 }

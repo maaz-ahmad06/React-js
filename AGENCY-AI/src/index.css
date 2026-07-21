@@ -5,12 +5,27 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-*{
+* {
    font-family: "Manrope", sans-serif;
    font-weight: 500;
-   cursor: none;
 }
 
-@theme{
+@media (pointer: fine) {
+  * {
+     cursor: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .custom-cursor {
+     display: none !important;
+  }
+}
+
+.custom-cursor-ring {
+  transition: scale 0.2s ease-out, background-color 0.2s ease-out;
+}
+
+@theme {
   --color-primary: #5044e5;
 }
